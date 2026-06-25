@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: monitoring-app
-        image: priyamal/monitoring-app:v1
+        image: priyamal/monitoring-app:v3
 
         ports:
         - containerPort: 5000
