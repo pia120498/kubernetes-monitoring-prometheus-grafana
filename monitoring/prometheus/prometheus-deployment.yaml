@@ -18,7 +18,6 @@ spec:
     spec:
       containers:
       - name: prometheus
-
         image: prom/prometheus:latest
 
         ports:
@@ -28,7 +27,14 @@ spec:
         - name: prometheus-config-volume
           mountPath: /etc/prometheus
 
+        - name: prometheus-storage
+          mountPath: /prometheus
+
       volumes:
       - name: prometheus-config-volume
         configMap:
           name: prometheus-config
+
+      - name: prometheus-storage
+        persistentVolumeClaim:
+          claimName: prometheus-pvc
