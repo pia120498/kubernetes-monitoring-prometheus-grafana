@@ -163,35 +163,44 @@ k8s-monitoring-project/
 │
 ├── app/
 │   ├── app.py
+│   ├── Dockerfile
 │   ├── requirements.txt
-│   └── Dockerfile
+│   └── .dockerignore
 │
 ├── k8s/
 │   ├── deployment.yaml
 │   └── service.yaml
 │
 ├── monitoring/
-│   ├── prometheus/
-│   │   ├── prometheus-config.yaml
-│   │   ├── prometheus-deployment.yaml
-│   │   ├── prometheus-service.yaml
-│   │   ├── prometheus-pvc.yaml
-│   │   └── alert-rules.yaml
-│   │
 │   ├── grafana/
+│   │   ├── dashboard.json
 │   │   ├── grafana-deployment.yaml
-│   │   ├── grafana-service.yaml
 │   │   ├── grafana-pvc.yaml
-│   │   └── dashboard.json
+│   │   └── grafana-service.yaml
 │   │
-│   └── node-exporter/
-│       ├── node-exporter-deployment.yaml
-│       └── node-exporter-service.yaml
+│   ├── node-exporter/
+│   │   ├── node-exporter-deployment.yaml
+│   │   └── node-exporter-service.yaml
+│   │
+│   └── prometheus/
+│       ├── alert-rules.yaml
+│       ├── prometheus-config.yaml
+│       ├── prometheus-deployment.yaml
+│       ├── prometheus-pvc.yaml
+│       └── prometheus-service.yaml
 │
 ├── screenshots/
+│   ├── dashboard.png
+│   ├── prometheus-targets.png
+│   ├── alert-pending.png
+│   ├── alert-firing.png
+│   ├── alert-resolved.png
+│   ├── kubectl-pods.png
+│   ├── kubectl-pvc.png
+│   └── architecture-diagram.png
 │
-└── README.md
-```
+├── .gitignore
+└── README.md```
 
 
 # Getting Started
