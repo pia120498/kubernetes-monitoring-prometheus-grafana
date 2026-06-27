@@ -8,6 +8,9 @@ data:
     global:
       scrape_interval: 15s
 
+    rule_files:
+      - /etc/prometheus/alert-rules.yaml
+
     scrape_configs:
       - job_name: "monitoring-app"
 
@@ -16,9 +19,42 @@ data:
         static_configs:
           - targets:
               - monitoring-app-service:5000
-      
+
       - job_name: "node-exporter"
 
         static_configs:
           - targets:
               - node-exporter-service:9100
+
+  alert-rules.yaml: |
+    groups:
+      - name: monitoring-alerts
+
+        rules:
+
+          - alert: MonitoringAppDown
+            expr: up{job="monitoring-app"} == 0
+            for: 30s
+            labels:
+              severity: critical
+            annotations:
+              summary: "Monitoring application is down"
+              description: "Prometheus cannot scrape monitoring-app for more than 30 seconds."
+
+          - alert: HighCPUUsage
+            expr: rate(process_cpu_seconds_total{job="monitoring-app"}[1m]) > 0.5
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High CPU usage detected"
+              description: "Application CPU usage exceeded threshold."
+
+          - alert: HighMemoryUsage
+            expr: process_resident_memory_bytes{job="monitoring-app"} > 50000000
+            for: 1m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High memory usage detected"
+              description: "Application resident memory exceeded 50 MB."

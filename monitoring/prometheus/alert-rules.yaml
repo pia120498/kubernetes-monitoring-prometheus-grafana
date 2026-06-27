@@ -1,0 +1,31 @@
+groups:
+  - name: monitoring-alerts
+
+    rules:
+
+      - alert: MonitoringAppDown
+        expr: up{job="monitoring-app"} == 0
+        for: 30s
+        labels:
+          severity: critical
+        annotations:
+          summary: "Monitoring application is down"
+          description: "Prometheus cannot scrape monitoring-app for more than 30 seconds."
+
+      - alert: HighCPUUsage
+        expr: 100 * (1 - avg(rate(node_cpu_seconds_total{job="node-exporter",mode="idle"}[2m]))) > 80
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High CPU usage"
+          description: "CPU utilization has been above 80% for more than 2 minutes."
+
+      - alert: HighMemoryUsage
+        expr: (1 - (node_memory_MemAvailable_bytes{job="node-exporter"} / node_memory_MemTotal_bytes{job="node-exporter"})) * 100 > 80
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage"
+          description: "Memory utilization has been above 80% for more than 2 minutes."
